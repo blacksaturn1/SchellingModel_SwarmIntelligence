@@ -486,6 +486,8 @@ class Grid(GridBase):
 
     def run(self):
         self.redraw()
+        isX=False
+        counter=0
         # -------- Main Program Loop -----------
         while True:
             for event in pygame.event.get():  # User did something
@@ -515,10 +517,12 @@ class Grid(GridBase):
             self.clock.tick(self.framerate)
 
 
+
+
+
+
 if __name__ == '__main__':
-    grid = Grid(3, 3, 90, 90, title='Tic Tac Toe', margin=1)
-    grid[0, 0] = 'O'
-    grid[1, 1] = 'X'
-    grid[2, 1] = 'O'
-    grid[2, 2] = 'X'
+    grid = Grid(50, 50, 16, 16, title='Schelling Model', margin=1)
+    
     grid.run()
+    
