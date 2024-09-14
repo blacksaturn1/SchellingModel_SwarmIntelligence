@@ -1,0 +1,1 @@
+# SchellingModel_SwarmIntelligence
