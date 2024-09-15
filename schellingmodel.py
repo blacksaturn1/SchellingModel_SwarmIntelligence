@@ -4,13 +4,14 @@ import random
 import pygame
 
 class SchellingModel:
-    def __init__(self, grid:Grid,population_density,happinessCount):
+    def __init__(self, grid:Grid,population_density,happinessCount:dict):
         self.__width = grid.height  # Width and height in number of cells
         self.__height = grid.width
         self.grid = grid
         self.density = population_density
         self.isX = True
         self.sim_runs=0
+        # self.happinessCount={}
         self.happinessCount=happinessCount
         self.upRightDownLeft = [ [0,-1],
                         [0,1],
@@ -95,8 +96,19 @@ class SchellingModel:
                 if self.grid[x,y] is None:
                     continue
                 count = self.countHappiness(x,y)
-                if count< self.happinessCount:
-                    self.move2(x,y)
+                percentages = list(self.happinessCount.keys())
+                if len(self.happinessCount)==1:
+                    if count< self.happinessCount[percentages[0]]:
+                        self.move2(x,y)
+                else:
+                    threshold = float(percentages[0])
+                    itemThreshold = random.random()
+                    if itemThreshold<=threshold:
+                        if count < self.happinessCount[percentages[0]]:
+                            self.move2(x,y)
+                    else:
+                        if count < self.happinessCount[percentages[1]]:
+                            self.move2(x,y)
         self.sim_runs+=1
         myFont = pygame.font.SysFont("Times New Roman", 14)
 
@@ -107,6 +119,7 @@ class SchellingModel:
         self.grid.screen.blit(randNumLabel, (10, 20))
         self.grid.screen.blit(diceDisplay, (10, 40))
         print("Simulation:",self.sim_runs)
+
         if self.sim_runs==1000:
             self.printStats()
     

@@ -3,13 +3,9 @@ import pygame
 from functools import partial
 from schellingmodel import SchellingModel
 import math
+import argparse
+import json
 
-
-
-
-#global isX, counter, grid
-
-    #pygame.display.flip()
 
 def draw_O(grid, cell_dimensions):
     
@@ -42,9 +38,19 @@ def draw_X(grid, cell_dimensions):
     x, y, w, h = cell_dimensions
     center = (x + math.floor(w/2), y + math.floor(h/2))
     pygame.draw.circle(grid.screen, RED, center, w*2/5 )
-#pygame.draw.circle(screen, color, (400,300), 75)
+
 if __name__ == '__main__':
-    
+    parser = argparse.ArgumentParser(
+                    prog='Schelling Model Simulator',
+                    description='IMplements single move cell of Schelling Model'
+                    )
+    parser.add_argument('-happinessCount', required=False,help='happinessCount as dictionary')
+    parser.add_argument('-populationDensity', required=False,help='populationDensity')
+
+    args = parser.parse_args()
+    happinessCount = json.loads(args.happinessCount)
+    assert(len(happinessCount)>0 and len(happinessCount)<3) # we only want to allow 2 happinessCount
+    populationDensity = float(args.populationDensity)
     isX=False
     counter=0
     isActive=False
@@ -58,7 +64,7 @@ if __name__ == '__main__':
     grid.set_drawaction('O', draw_O) # Green
     grid.set_drawaction('X', draw_X) # Red
     
-    model = SchellingModel(grid,.6,happinessCount=3)
+    model = SchellingModel(grid,populationDensity,happinessCount=happinessCount)
     # grid.set_timer_action(model.timer_action)
     grid.set_timer_action(model.run_sim)
 

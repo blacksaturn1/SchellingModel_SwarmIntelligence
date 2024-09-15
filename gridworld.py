@@ -165,6 +165,7 @@ class Grid(GridBase):
         pygame.display.set_caption(title)
         self.set_screen_dimensions()
         self.clock = pygame.time.Clock()
+        self.counter = 0
 
         pygame.font.init()
         self.font = font
@@ -491,9 +492,13 @@ class Grid(GridBase):
     def run(self):
         self.redraw()
         isX=False
-        counter=0
+        self.counter = 0
         # -------- Main Program Loop -----------
         while True:
+            if self.counter in (0, 50, 100, 1000):
+                fileName = "screenshot_"+str(self.counter)+".jpeg"
+                pygame.image.save(self.screen, fileName)
+            self.counter += 1
             for event in pygame.event.get():  # User did something
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_f:
@@ -519,6 +524,7 @@ class Grid(GridBase):
 
             # --- Limit to x frames per second
             self.clock.tick(self.framerate)
+
 
 
 
