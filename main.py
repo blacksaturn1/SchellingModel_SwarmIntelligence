@@ -49,14 +49,16 @@ if __name__ == '__main__':
     counter=0
     isActive=False
     grid = Grid(50, 50, 17, 17, title='Schelling Model', margin=1,framerate=10)
+
+    #grid = Grid(20, 20, 40, 40, title='Schelling Model', margin=1,framerate=10)
         # grid.set_cell_click_action(partial(cell_click, grid=grid))
         #grid.set_cell_click_action(cell_click)
     #grid.set_timer_action(partial(timer_action, grid,isX,counter))
     
-    grid.set_drawaction('O', draw_O)
-    grid.set_drawaction('X', draw_X)
+    grid.set_drawaction('O', draw_O) # Green
+    grid.set_drawaction('X', draw_X) # Red
     
-    model = SchellingModel(grid,.8,happinessCount=3)
+    model = SchellingModel(grid,.6,happinessCount=3)
     # grid.set_timer_action(model.timer_action)
     grid.set_timer_action(model.run_sim)
 

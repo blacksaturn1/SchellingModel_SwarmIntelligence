@@ -18,7 +18,7 @@ class SchellingModel:
                         [1,0]
                       ]
         self.upRightDownLeft = [ [-1,-1],[0,-1],[1,-1],
-                                 [1,0],         [0,1],
+                                 [-1,0],         [1,0],
                                  [-1,1], [0,1], [1,1]]     
 
     def setup(self):
@@ -71,7 +71,9 @@ class SchellingModel:
         openLocations = []
         char = self.grid[x,y]
         for x_delta,y_delta in self.upRightDownLeft:
-            if x+x_delta>=0 and x+x_delta<self.__width and y+y_delta>=0 and y+y_delta<self.__height and self.grid[x+x_delta,y+y_delta] is None:
+            neighborX = x+x_delta
+            neighborY = y+y_delta
+            if neighborX>=0 and neighborX<self.__width and y+y_delta>=0 and y+y_delta<self.__height and self.grid[x+x_delta,y+y_delta] is None:
                 openLocations.append([x+x_delta,y+y_delta])
 
         if len(openLocations)>0:    
